@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.Home;
+import beans.Branch;
 import beans.User;
 import service.ManagementService;
 
@@ -42,17 +42,17 @@ public class HomeServlet extends HttpServlet {
 
 
 		//支店コード１/支店名本社ならtrue
+		HttpSession session = req.getSession();
 
-	HttpSession session = req.getSession();
-	ManagementService manegementService = new ManagementService();
-	Home home = Home.manegement(, home);
-	List<Home> manegement = manegementService.getManegements();
+		Int ID = req.getParameter("ID");
 
-	String branchId = req.getParameter("branchId");
+		ManagementService manegementService = new ManagementService();
 
-	if (branchId != "本社") {
+		Branch id = manegementService.branch(ID);
 
-		session.setAttribute("branchId", home);
+	if (ID != null) {
+
+		session.setAttribute("branch", ID);
 		res.sendRedirect("manegement.jsp");
 	} else {
 
