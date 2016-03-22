@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.Branch;
+import beans.Post;
 import beans.User;
 import service.ManagementService;
+import service.UserService;
 
-@WebServlet(urlPatterns = { "/index.jsp" })
+@WebServlet(urlPatterns = { "/home" })
 
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,35 +27,18 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 		User user = (User) req.getSession().getAttribute("loginUser");
-
-		boolean isShowMessageForm;
-
-		if (user != null) {
-			isShowMessageForm = true;
-		} else {
-			isShowMessageForm = false;
-		}
-
-		req.setAttribute("isShowMessageForm", isShowMessageForm);
-
-		req.getRequestDispatcher("/home.jsp").forward(req, res);
-	}
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
-
 		//支店コード１/支店名本社ならtrue
 		HttpSession session = req.getSession();
 
-		Int ID = req.getParameter("ID");
+		int branchId = req.getInt("branchId");
 
 		ManagementService manegementService = new ManagementService();
 
-		Branch id = manegementService.branch(ID);
+		Branch id = manegementService.branch(branchId);
 
-	if (ID != null) {
+	if (branchId != null) {
 
-		session.setAttribute("branch", ID);
+		session.setAttribute("branch", branchId);
 		res.sendRedirect("manegement.jsp");
 	} else {
 
@@ -63,4 +49,40 @@ public class HomeServlet extends HttpServlet {
 	}
 }
 
-}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+
+		List<String> messages = new ArrayList<String>();
+
+		HttpSession session = req.getSession();
+		if (isValid(req, messages) == true) {
+
+			User user = (User) session.getAttribute("loginUser");
+
+			Post post = new Post();
+			post.setSubject(req.getParameter("subject"));
+			post.setText(req.getParameter("text"));
+			post.setCategory(req.getParameter("category"));
+			post.setUserId(user.getId());
+
+
+			new UserService().register(user);
+			// フォワード
+			RequestDispatcher dispatcher = req.getRequestDispatcher("home.jsp");
+			dispatcher.forward(req, res);
+
+		} else {
+			session.setAttribute("errorMessages", messages);
+			res.sendRedirect("home.jsp");
+		}
+	}
+
+	private boolean isValid(HttpServletRequest req, List<String> messages) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
+
+
+	}
+
+
