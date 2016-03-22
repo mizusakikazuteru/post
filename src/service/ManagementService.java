@@ -31,3 +31,11 @@ public class ManagementService {
 			close(connection);
 		}
 	}}
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07

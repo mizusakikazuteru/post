@@ -26,6 +26,7 @@ body {
 </head>
 <body>
 
+<<<<<<< HEAD
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
@@ -36,6 +37,19 @@ body {
 		</div>
 		<c:remove var="errorMessages" scope="session" />
 	</c:if>
+=======
+<c:if test="${ not empty errorMessages }">
+	<div class="errorMessages">
+		<ul>
+			<c:forEach items="${errorMessages}" var="message">
+				<li><c:out value="${message}" /></li>
+			</c:forEach>
+		</ul>
+	</div>
+	<c:remove var="errorMessages" scope="session"/>
+</c:if>
+
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 	<h1>ユーザーログイン</h1>
 	<form action="login" method="post">
 		<br />

@@ -62,11 +62,21 @@ li {
 
 
 	<c:out value="${branch .id}" />
+<<<<<<< HEAD
 	<li><a href="Management">ユーザー管理</a></li>
 
 				<li><a href="logout">ログアウト</a></li>
+=======
+	<li><a href="management.jsp">ユーザー管理</a></li>
+
+	<c:if test="${ empty branch .id }">
+		<a href="home"></a>
+	</c:if>
+	<li><a href="logout">ログアウト</a></li>
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 			</ul>
 		</c:if>
+
 		<form action="home" method="post">
 			<table>
 				<tr>

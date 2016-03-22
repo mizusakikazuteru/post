@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+<<<<<<< HEAD
 import beans.Branch;
 import beans.Department;
 import beans.User;
@@ -23,12 +24,23 @@ import service.UserService;
 
 
 @WebServlet(urlPatterns = { "/edit" })
+=======
+import beans.User;
+import exception.NoRowsUpdatedRuntimeException;
+import service.UserService;
+
+/**
+ * Servlet implementation class EditServlet
+ */
+@WebServlet("/EditServlet")
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+<<<<<<< HEAD
 //		HttpSession session = req.getSession();
 //		User loginUser = (User) session.getAttribute("loginUser");
 //
@@ -48,6 +60,18 @@ public class EditServlet extends HttpServlet {
 		List<Department> departments = departmentService.getDepartments();
 
 		req.setAttribute("departments", departments);
+=======
+		HttpSession session = req.getSession();
+		// ログイン情報を取ってくる loginUserへ代入
+		User loginUser = (User) session.getAttribute("loginUser");
+		// 編集スタート
+		if (session.getAttribute("editUser") == null) {
+			User editUser = new UserService().getUser(loginUser.getId());
+			// 初回のみ情報をbeanからUser情報を取ってくる
+			session.setAttribute("editUser", editUser);
+		}
+
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 		req.getRequestDispatcher("edit.jsp").forward(req, res);
 	}
 
@@ -70,7 +94,11 @@ public class EditServlet extends HttpServlet {
 				session.removeAttribute("editUser");
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 				session.setAttribute("errorMessages", messages);
+<<<<<<< HEAD
 				res.sendRedirect("edit.jsp");
+=======
+				res.sendRedirect("edit");
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 			}
 
 			session.setAttribute("loginUser", editUser);

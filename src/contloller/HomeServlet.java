@@ -16,9 +16,13 @@ import beans.Branch;
 import beans.Post;
 import beans.User;
 import service.ManagementService;
+<<<<<<< HEAD
+=======
+import service.PostService;
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 import service.UserService;
 
-@WebServlet(urlPatterns = { "/index.jsp" })
+@WebServlet(urlPatterns = { "/home" })
 
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +36,7 @@ public class HomeServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		int branchId = (int) session.getAttribute("branchId");
+<<<<<<< HEAD
 
 		ManagementService manegementService = new ManagementService();
 
@@ -48,14 +53,52 @@ public class HomeServlet extends HttpServlet {
 			session.setAttribute("errorMessages", messages);
 			res.sendRedirect("home.jsp");
 		}
+=======
+
+		ManagementService manegementService = new ManagementService();
+
+		Branch id = manegementService.branch(branchId);
+
+		if (branchId == 1) {
+
+			session.setAttribute("branch", branchId);
+			res.sendRedirect("management.jsp");
+		} else {
+
+			List<String> messages = new ArrayList<String>();
+			messages.add("管理者権限がありません。");
+			session.setAttribute("errorMessages", messages);
+			res.sendRedirect("home.jsp");
+		}
+		boolean isShowMessageForm;
+		if (user != null) {
+			isShowMessageForm = true;
+		} else {
+			isShowMessageForm = false;
+		}
+
+		List<Post> messages = new PostService().getpost();
+
+		req.setAttribute("messages", messages);
+		req.setAttribute("isShowMessageForm", isShowMessageForm);
+
+		req.getRequestDispatcher("home.jsp").forward(req, res);
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		List<String> messages = new ArrayList<String>();
 
+<<<<<<< HEAD
 		HttpSession session = req.getSession();
 
+=======
+		List<String> messages = new ArrayList<String>();
+
+		HttpSession session = req.getSession();
+
+>>>>>>> 4bd8a2a3afb31ce75d17c8b68710b441c7c40e07
 		User user = (User) session.getAttribute("loginUser");
 
 		Post post = new Post();
