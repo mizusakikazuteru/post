@@ -24,16 +24,18 @@ body {
 </script>
 </head>
 <body>
-	<c:if test="${ not empty errorMessages }">
-		<div class="errorMessages">
-			<ul>
-				<c:forEach items="${errorMessages}" var="message">
-					<li><c:out value="${message}" /></li>
-				</c:forEach>
-			</ul>
-		</div>
-		<c:remove var="errorMessages" scope="session" />
-	</c:if>
+
+<c:if test="${ not empty errorMessages }">
+	<div class="errorMessages">
+		<ul>
+			<c:forEach items="${errorMessages}" var="message">
+				<li><c:out value="${message}" /></li>
+			</c:forEach>
+		</ul>
+	</div>
+	<c:remove var="errorMessages" scope="session"/>
+</c:if>
+
 	<h1>ユーザーログイン</h1>
 	<form action="login" method="post">
 		<br />

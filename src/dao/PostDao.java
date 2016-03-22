@@ -15,7 +15,7 @@ import exception.SQLRuntimeException;
 public class PostDao {
 
 	// 投稿情報を結果セットからbeansのpost.javaに入れる
-	private List<Post> toPostList(ResultSet rs) throws SQLException {
+	public List<Post> toPostList(ResultSet rs) throws SQLException {
 
 		List<Post> ret = new ArrayList<Post>();
 
